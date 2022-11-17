@@ -1,9 +1,20 @@
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
+import { useState } from "react";
 import "./App.css";
-import AddEmail from "./components/AddParticipant";
+import AddParticipant from "./components/AddParticipant";
+import Generate from "./components/Generate";
 import ParticipantsList from "./components/ParticipantsList";
+import Results from "./components/Results";
 
 function App() {
+    const [participants, setParticipants] = useState([
+        { email: "je.suis.geoffrey.hach@gmail.com", name: "Geoffrey" },
+        { email: "rens@gmail.com", name: "Rens" },
+        { email: "yavuz@gmail.com", name: "Yavuz" },
+        { email: "lebgdu67@gmail.com" },
+    ]);
+    const [results, setResults] = useState();
+
     return (
         <Box
             display="flex"
@@ -25,9 +36,24 @@ function App() {
                     padding: "2rem",
                 }}
             >
-                <AddEmail />
-                <ParticipantsList />
-                <Button>Valider</Button>
+                {!results && (
+                    <>
+                        <AddParticipant
+                            participants={participants}
+                            setParticipants={setParticipants}
+                        />
+                        <ParticipantsList
+                            participants={participants}
+                            setParticipants={setParticipants}
+                        />
+                        <Generate
+                            participants={participants}
+                            setResults={setResults}
+                        />
+                    </>
+                )}
+
+                {results && <Results results={results} />}
             </Card>
         </Box>
     );

@@ -1,9 +1,31 @@
-import { Box, Button, TextField } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import { Box, Button, TextField, Typography } from "@mui/material";
 
-function AddEmail() {
+function AddEmail({ participants, setParticipants }) {
+    const [error, setError] = useState();
+    const [newParticipant, setNewParticipant] = useState({
+        email: "",
+        name: "",
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (
+            !participants.filter(
+                (participant) => participant.email === newParticipant.email
+            ).length > 0
+        ) {
+            if (newParticipant.name === "") {
+                newParticipant.name = newParticipant.email.split("@")[0];
+            }
+            setParticipants([...participants, newParticipant]);
+        } else setError("Email déjà ajouté");
+    };
+
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
+            {error && <Typography color="error">{error}</Typography>}
+
             <Box
                 sx={{
                     display: "flex",
@@ -11,21 +33,33 @@ function AddEmail() {
                     alignItems: "center",
                     gap: "2rem",
                     width: "100%",
-                    marginBottom: "2rem",
+                    marginBlock: "2rem",
                 }}
             >
                 <TextField
                     required
                     id="outlined-required"
-                    label="Required"
-                    defaultValue="Email"
+                    label="Email - Required"
+                    placeholder="Email"
+                    onChange={(e) => {
+                        setNewParticipant({
+                            email: e.target.value,
+                            name: newParticipant.name,
+                        });
+                    }}
                 />
                 <TextField
                     id="outlined-required"
-                    label=""
-                    defaultValue="Name"
+                    label="Name"
+                    placeholder="Name"
+                    onChange={(e) => {
+                        setNewParticipant({
+                            name: e.target.value,
+                            email: newParticipant.email,
+                        });
+                    }}
                 />
-                <Button>Ajouter participant</Button>
+                <Button type="submit">Ajouter participant</Button>
             </Box>
         </form>
     );

@@ -2,11 +2,18 @@ import { Box } from "@mui/system";
 import React from "react";
 import ParticipantItem from "./ParticipantItem";
 
-function ParticipantsList(props) {
+function ParticipantsList({ participants, setParticipants }) {
     return (
         <Box sx={{ marginBottom: "2rem" }}>
-            <ParticipantItem />
-            <ParticipantItem />
+            {participants.map((participant) => (
+                <ParticipantItem
+                    key={participant.email}
+                    name={participant.name}
+                    email={participant.email}
+                    participants={participants}
+                    setParticipants={setParticipants}
+                />
+            ))}
         </Box>
     );
 }
