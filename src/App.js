@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { Box, Button, Card, Typography } from "@mui/material";
+import "./App.css";
+import AddEmail from "./components/AddParticipant";
+import ParticipantsList from "./components/ParticipantsList";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    return (
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexDirection="column"
+            minHeight="100vh"
+            backgroundColor="darkgreen"
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+            <Typography variant="h1" component="h1" color="red">
+                Secret Santa
+            </Typography>
+            <Card
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    border: "5px solid red",
+                    minWidth: "600px",
+                    padding: "2rem",
+                }}
+            >
+                <AddEmail />
+                <ParticipantsList />
+                <Button>Valider</Button>
+            </Card>
+        </Box>
+    );
 }
 
 export default App;
