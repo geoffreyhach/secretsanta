@@ -1,13 +1,13 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React from "react";
+import ResultItem from "./ResultItem";
 
 function Results({ results }) {
+    console.log(results);
     return (
-        <Box>
+        <Box display="flex" flexDirection="column">
             {results.map((couple) => (
-                <Typography>
-                    {couple[0]} offre un cadeau à {couple[1]}
-                </Typography>
+                <ResultItem couple={couple} />
             ))}
             <Button>Envoyer Emails</Button>
         </Box>

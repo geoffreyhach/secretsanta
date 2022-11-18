@@ -1,9 +1,10 @@
-import React from "react";
-import { Box, IconButton, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 
 function ParticipantItem({ name, email, participants, setParticipants }) {
+    const [isHovered, setIsHovered] = useState(false);
+
     const handleDelete = () => {
         setParticipants(
             participants.filter((participant) => participant.email !== email)
@@ -11,23 +12,28 @@ function ParticipantItem({ name, email, participants, setParticipants }) {
     };
 
     return (
-        <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            sx={{ width: "100%" }}
-        >
-            <Typography>{!name ? email.split("@")[0] : name}</Typography>
-            <Typography>{email}</Typography>
-            <Box>
-                <IconButton onClick={handleDelete}>
-                    <DeleteIcon color="error" />
-                </IconButton>
-                <IconButton disabled>
-                    <EditIcon color="diasbled" />
-                </IconButton>
+        <>
+            <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                sx={{ width: "100%", minHeight: "2.5rem" }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+            >
+                <Typography>{!name ? email.split("@")[0] : name}</Typography>
+                <Box display="flex" flexDirection="row" alignItems="center">
+                    <Typography>{email}</Typography>
+
+                    {isHovered && (
+                        <IconButton onClick={handleDelete}>
+                            <DeleteIcon color="error" />
+                        </IconButton>
+                    )}
+                </Box>
             </Box>
-        </Box>
+            <Divider />
+        </>
     );
 }
 

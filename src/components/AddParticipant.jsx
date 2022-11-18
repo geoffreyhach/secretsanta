@@ -1,5 +1,15 @@
 import React, { useState } from "react";
+import Joi from "joi";
 import { Box, Button, TextField, Typography } from "@mui/material";
+
+const schema = Joi.object({
+    name: Joi.string().min(3).max(15),
+    email: Joi.string()
+        .email({ tlds: { allow: false } })
+        .required(),
+});
+
+console.log(schema.validate({ name: "dsffs", email: "lebg@gmail.com" }));
 
 function AddEmail({ participants, setParticipants }) {
     const [error, setError] = useState();
@@ -10,16 +20,25 @@ function AddEmail({ participants, setParticipants }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (
-            !participants.filter(
-                (participant) => participant.email === newParticipant.email
-            ).length > 0
-        ) {
-            if (newParticipant.name === "") {
-                newParticipant.name = newParticipant.email.split("@")[0];
-            }
-            setParticipants([...participants, newParticipant]);
-        } else setError("Email déjà ajouté");
+
+        const { error } = schema.validate({
+            name: newParticipant.name,
+            email: newParticipant.email,
+        });
+
+        if (!error) {
+            if (
+                !participants.filter(
+                    (participant) => participant.email === newParticipant.email
+                ).length > 0
+            ) {
+                if (newParticipant.name === "") {
+                    newParticipant.name = newParticipant.email.split("@")[0];
+                }
+                setParticipants([...participants, newParticipant]);
+                setError();
+            } else setError("Email déjà ajouté");
+        } else setError(error.message);
     };
 
     return (
@@ -37,18 +56,6 @@ function AddEmail({ participants, setParticipants }) {
                 }}
             >
                 <TextField
-                    required
-                    id="outlined-required"
-                    label="Email - Required"
-                    placeholder="Email"
-                    onChange={(e) => {
-                        setNewParticipant({
-                            email: e.target.value,
-                            name: newParticipant.name,
-                        });
-                    }}
-                />
-                <TextField
                     id="outlined-required"
                     label="Name"
                     placeholder="Name"
@@ -59,6 +66,19 @@ function AddEmail({ participants, setParticipants }) {
                         });
                     }}
                 />
+                <TextField
+                    required
+                    id="outlined-required"
+                    label="Email - Requis"
+                    placeholder="Email"
+                    onChange={(e) => {
+                        setNewParticipant({
+                            email: e.target.value,
+                            name: newParticipant.name,
+                        });
+                    }}
+                />
+
                 <Button type="submit">Ajouter participant</Button>
             </Box>
         </form>
