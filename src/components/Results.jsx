@@ -1,17 +1,39 @@
 import React, { useState } from "react";
-import { Box, Button, Stack, TextField } from "@mui/material";
+import Joi from "joi";
+import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import ResultItem from "./ResultItem";
 
+const schema = Joi.object({
+    name: Joi.string().trim().min(3).max(25),
+    email: Joi.string()
+        .email({ tlds: { allow: false } })
+        .trim()
+        .required(),
+});
+
 function Results({ results }) {
-    console.log(results);
     const [organizer, setOrganizer] = useState({ name: "", email: "" });
+    const [error, setError] = useState();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const { error } = schema.validate({
+            name: organizer.name,
+            email: organizer.email,
+        });
+
+        if (!error) {
+            setError("");
+            console.log(organizer);
+        } else setError(error.message);
+    };
 
     return (
         <Box display="flex" flexDirection="column">
             {results.map((couple) => (
                 <ResultItem key={results.indexOf(couple)} couple={couple} />
             ))}
-            <form>
+            <form onSubmit={handleSubmit}>
                 <Stack
                     direction={{ xs: "column", sm: "row" }}
                     spacing={2}
@@ -57,6 +79,11 @@ function Results({ results }) {
                         Envoyer Emails
                     </Button>
                 </Stack>
+                {error && (
+                    <Typography color="error" sx={{ marginTop: "1rem" }}>
+                        {error}
+                    </Typography>
+                )}
             </form>
         </Box>
     );
