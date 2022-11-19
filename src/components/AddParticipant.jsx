@@ -31,6 +31,9 @@ function AddEmail({ participants, setParticipants }) {
             if (
                 !participants.filter(
                     (participant) => participant.email === newParticipant.email
+                ).length > 0 &&
+                !participants.filter(
+                    (participant) => participant.name === newParticipant.name
                 ).length > 0
             ) {
                 if (newParticipant.name === "") {
@@ -40,7 +43,7 @@ function AddEmail({ participants, setParticipants }) {
                 setError();
                 nameRef.current.value = "";
                 emailRef.current.value = "";
-            } else setError("Email déjà ajouté");
+            } else setError("Merci d'éviter les doublons d'email ou de nom.");
         } else setError(error.message);
     };
 
@@ -48,7 +51,11 @@ function AddEmail({ participants, setParticipants }) {
         <form onSubmit={handleSubmit}>
             {error && <Typography color="error">{error}</Typography>}
 
-            <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+            <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={2}
+                sx={{ marginTop: "1rem" }}
+            >
                 <TextField
                     id="outlined-required"
                     label="Name"

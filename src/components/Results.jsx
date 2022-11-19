@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Joi from "joi";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import ResultItem from "./ResultItem";
+import emailjs from "@emailjs/browser";
 
 const schema = Joi.object({
     name: Joi.string().trim().min(3).max(25),
@@ -15,6 +16,28 @@ function Results({ results }) {
     const [organizer, setOrganizer] = useState({ name: "", email: "" });
     const [error, setError] = useState();
 
+    const sendEmails = () => {
+        const serviceID = "service_bqtfayt";
+        const templateID = "template_rs4lz1f";
+
+        results.forEach((email) => {
+            const form = {
+                organizer_name: organizer.name,
+                organizer_email: organizer.email,
+                to_name: email.name1,
+                to_email: email.email,
+                name: email.name2,
+            };
+            // console.log(email.name1);
+            // console.log(email.name2);
+            // console.log(email.email);
+            emailjs.sendForm(serviceID, templateID, form, "kcZQrlI6KOz4AF0p7");
+        });
+
+        // console.log(results);
+        // console.log(organizer);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const { error } = schema.validate({
@@ -24,7 +47,7 @@ function Results({ results }) {
 
         if (!error) {
             setError("");
-            console.log(organizer);
+            sendEmails();
         } else setError(error.message);
     };
 

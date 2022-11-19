@@ -6,12 +6,10 @@ import Generate from "./Generate";
 import ParticipantsList from "./ParticipantsList";
 import Results from "./Results";
 
-function SecretSanta(props) {
+function SecretSanta() {
     const [participants, setParticipants] = useState([
         { email: "je.suis.geoffrey.hach@gmail.com", name: "Geoffrey" },
         { email: "rens@gmail.com", name: "Rens" },
-        { email: "yavuz@gmail.com", name: "Yavuz" },
-        { email: "lebgdu67@gmail.com" },
     ]);
     const [results, setResults] = useState();
     return (
@@ -22,7 +20,6 @@ function SecretSanta(props) {
                 border: "10px solid",
                 borderColor: "primary.main",
                 borderRadius: "5px",
-                // minWidth: "600px",
                 padding: "2rem",
             }}
         >
