@@ -12,6 +12,7 @@ function Footer(props) {
                 gap=".5rem"
                 sx={{
                     padding: ".5rem",
+                    maxHeight: "3vh",
                     backgroundColor: "primary.main",
                 }}
             >

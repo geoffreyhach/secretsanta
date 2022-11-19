@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Joi from "joi";
 import { Box, Button, TextField, Typography } from "@mui/material";
 
 const schema = Joi.object({
-    name: Joi.string().min(3).max(15),
+    name: Joi.string().trim().min(3).max(15),
     email: Joi.string()
         .email({ tlds: { allow: false } })
+        .trim()
         .required(),
 });
 
-console.log(schema.validate({ name: "dsffs", email: "lebg@gmail.com" }));
-
 function AddEmail({ participants, setParticipants }) {
+    const nameRef = useRef(null);
+    const emailRef = useRef(null);
     const [error, setError] = useState();
     const [newParticipant, setNewParticipant] = useState({
         email: "",
@@ -37,6 +38,8 @@ function AddEmail({ participants, setParticipants }) {
                 }
                 setParticipants([...participants, newParticipant]);
                 setError();
+                nameRef.current.value = "";
+                emailRef.current.value = "";
             } else setError("Email déjà ajouté");
         } else setError(error.message);
     };
@@ -59,6 +62,7 @@ function AddEmail({ participants, setParticipants }) {
                     id="outlined-required"
                     label="Name"
                     placeholder="Name"
+                    inputRef={nameRef}
                     onChange={(e) => {
                         setNewParticipant({
                             name: e.target.value,
@@ -69,6 +73,7 @@ function AddEmail({ participants, setParticipants }) {
                 <TextField
                     required
                     id="outlined-required"
+                    inputRef={emailRef}
                     label="Email - Requis"
                     placeholder="Email"
                     onChange={(e) => {
@@ -79,7 +84,9 @@ function AddEmail({ participants, setParticipants }) {
                     }}
                 />
 
-                <Button type="submit">Ajouter participant</Button>
+                <Button variant="outlined" type="submit">
+                    Ajouter participant
+                </Button>
             </Box>
         </form>
     );
