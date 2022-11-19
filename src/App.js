@@ -32,7 +32,12 @@ function App() {
                 minHeight="97vh"
                 backgroundColor="secondary.main"
             >
-                <Typography variant="h1" component="h1" color="primary">
+                <Typography
+                    variant="h1"
+                    component="h1"
+                    color="primary"
+                    textAlign="center"
+                >
                     Secret Santa
                 </Typography>
                 <SecretSanta />

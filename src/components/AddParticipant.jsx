@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import Joi from "joi";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Button, Stack, TextField, Typography } from "@mui/material";
 
 const schema = Joi.object({
     name: Joi.string().trim().min(3).max(15),
@@ -48,16 +48,7 @@ function AddEmail({ participants, setParticipants }) {
         <form onSubmit={handleSubmit}>
             {error && <Typography color="error">{error}</Typography>}
 
-            <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "2rem",
-                    width: "100%",
-                    marginBlock: "2rem",
-                }}
-            >
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
                 <TextField
                     id="outlined-required"
                     label="Name"
@@ -74,7 +65,7 @@ function AddEmail({ participants, setParticipants }) {
                     required
                     id="outlined-required"
                     inputRef={emailRef}
-                    label="Email - Requis"
+                    label="Email"
                     placeholder="Email"
                     onChange={(e) => {
                         setNewParticipant({
@@ -87,7 +78,7 @@ function AddEmail({ participants, setParticipants }) {
                 <Button variant="outlined" type="submit">
                     Ajouter participant
                 </Button>
-            </Box>
+            </Stack>
         </form>
     );
 }

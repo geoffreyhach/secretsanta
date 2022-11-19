@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Divider, IconButton, Typography } from "@mui/material";
+import { Box, Divider, IconButton, Stack, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function ParticipantItem({ name, email, participants, setParticipants }) {
@@ -13,15 +13,17 @@ function ParticipantItem({ name, email, participants, setParticipants }) {
 
     return (
         <>
-            <Box
-                display="flex"
+            <Stack
+                direction={{ xs: "column", sm: "row" }}
                 justifyContent="space-between"
-                alignItems="center"
+                alignItems={{ xs: "start", sm: "center" }}
                 sx={{ width: "100%", minHeight: "2.5rem" }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
-                <Typography>{!name ? email.split("@")[0] : name}</Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                    {!name ? email.split("@")[0] : name}
+                </Typography>
                 <Box display="flex" flexDirection="row" alignItems="center">
                     <Typography>{email}</Typography>
 
@@ -31,7 +33,7 @@ function ParticipantItem({ name, email, participants, setParticipants }) {
                         </IconButton>
                     )}
                 </Box>
-            </Box>
+            </Stack>
             <Divider />
         </>
     );

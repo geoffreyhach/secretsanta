@@ -4,7 +4,7 @@ import ParticipantItem from "./ParticipantItem";
 
 function ParticipantsList({ participants, setParticipants }) {
     return (
-        <Box sx={{ marginBottom: "2rem" }}>
+        <Box sx={{ marginBlock: "2rem" }}>
             {participants.map((participant) => (
                 <ParticipantItem
                     key={participant.email}
