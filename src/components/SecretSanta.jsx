@@ -9,7 +9,7 @@ import Results from "./Results";
 function SecretSanta() {
     const [participants, setParticipants] = useState([
         { email: "je.suis.geoffrey.hach@gmail.com", name: "Geoffrey" },
-        { email: "rens@gmail.com", name: "Rens" },
+        { email: "secretsanta67000@gmail.com", name: "santa" },
     ]);
     const [results, setResults] = useState();
     return (

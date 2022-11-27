@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Joi from "joi";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import ResultItem from "./ResultItem";
-import emailjs from "@emailjs/browser";
+import axios from "axios";
 
 const schema = Joi.object({
     name: Joi.string().trim().min(3).max(25),
@@ -16,26 +16,20 @@ function Results({ results }) {
     const [organizer, setOrganizer] = useState({ name: "", email: "" });
     const [error, setError] = useState();
 
-    const sendEmails = () => {
-        const serviceID = "service_bqtfayt";
-        const templateID = "template_rs4lz1f";
-
-        results.forEach((email) => {
-            const form = {
-                organizer_name: organizer.name,
-                organizer_email: organizer.email,
-                to_name: email.name1,
-                to_email: email.email,
-                name: email.name2,
-            };
-            // console.log(email.name1);
-            // console.log(email.name2);
-            // console.log(email.email);
-            emailjs.sendForm(serviceID, templateID, form, "kcZQrlI6KOz4AF0p7");
-        });
-
-        // console.log(results);
-        // console.log(organizer);
+    const sendEmail = (email, organizer, name1, name2) => {
+        const data = {
+            email: email,
+            organizer: organizer,
+            name1: name1,
+            name2: name2,
+        };
+        console.log(data);
+        axios
+            .post("https://secretsanta-api.vercel.app/sendemails", data, {
+                "Content-Type": "application/json",
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.warn(err));
     };
 
     const handleSubmit = (e) => {
@@ -46,8 +40,19 @@ function Results({ results }) {
         });
 
         if (!error) {
+            results.forEach((user) => {
+                const { email, name1, name2 } = user;
+                console.log(organizer.name);
+                sendEmail(email, organizer.name, name1, name2);
+            });
+            // sendEmail(
+            //     "je.suis.geoffrey.hach@gmail.com",
+            //     "le test",
+            //     "geoff",
+            //     "Beth"
+            // );
             setError("");
-            sendEmails();
+            console.log("react post resquest");
         } else setError(error.message);
     };
 
