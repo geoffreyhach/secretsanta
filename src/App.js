@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import "./App.css";
 import Footer from "./components/Footer";
 import SecretSanta from "./components/SecretSanta";
+import Snowfall from "react-snowfall";
 
 const theme = createTheme({
     typography: {
@@ -29,9 +30,11 @@ function App() {
                 alignItems="center"
                 flexDirection="column"
                 gap="3rem"
-                minHeight="97vh"
+                minHeight="96vh"
+                overflow="hidden"
                 backgroundColor="secondary.main"
             >
+                <Snowfall snowflakeCount={100} style={{ zIndex: "0" }} />
                 <Typography
                     variant="h1"
                     component="h1"

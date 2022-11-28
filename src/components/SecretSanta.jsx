@@ -7,7 +7,10 @@ import ParticipantsList from "./ParticipantsList";
 import Results from "./Results";
 
 function SecretSanta() {
-    const [participants, setParticipants] = useState([]);
+    const [participants, setParticipants] = useState([
+        { name: "Geoff", email: "mail@gmail.com" },
+        { name: "Renz", email: "renz@mail.com" },
+    ]);
     const [results, setResults] = useState();
     return (
         <Card
@@ -18,6 +21,8 @@ function SecretSanta() {
                 borderColor: "primary.main",
                 borderRadius: "5px",
                 padding: "2rem",
+                width: "min(70vw, 800px)",
+                zIndex: "2",
             }}
         >
             {!results && (

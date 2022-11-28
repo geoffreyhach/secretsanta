@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Joi from "joi";
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import ResultItem from "./ResultItem";
 import axios from "axios";
 
@@ -81,53 +81,64 @@ function Results({ results }) {
                 <ResultItem key={results.indexOf(couple)} couple={couple} />
             ))}
             <form onSubmit={handleSubmit}>
-                <Stack
-                    direction={{ xs: "column", sm: "row" }}
-                    spacing={2}
+                <Grid
+                    container
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={1}
                     sx={{
                         marginTop: "2rem",
                     }}
                 >
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Nom de l'organisateur"
-                        placeholder="Nom de l'organisateur"
-                        onChange={(e) => {
-                            setOrganizer({
-                                email: organizer.email,
-                                name: e.target.value,
-                            });
-                        }}
-                    />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Email"
-                        placeholder="Email"
-                        onChange={(e) => {
-                            setOrganizer({
-                                email: e.target.value,
-                                name: organizer.name,
-                            });
-                        }}
-                    />
+                    <Grid item xs={12} sm={4}>
+                        <TextField
+                            required
+                            fullWidth
+                            id="outlined-required"
+                            label="Nom de l'organisateur"
+                            placeholder="Nom de l'organisateur"
+                            onChange={(e) => {
+                                setOrganizer({
+                                    email: organizer.email,
+                                    name: e.target.value,
+                                });
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            required
+                            fullWidth
+                            id="outlined-required"
+                            label="Email"
+                            placeholder="Email"
+                            onChange={(e) => {
+                                setOrganizer({
+                                    email: e.target.value,
+                                    name: organizer.name,
+                                });
+                            }}
+                        />
+                    </Grid>
 
-                    <Button
-                        type="submit"
-                        variant="outlined"
-                        disabled={
-                            organizer.name === "" ||
-                            organizer.email === "" ||
-                            isSent === true
-                        }
-                        sx={{
-                            padding: ".9rem",
-                        }}
-                    >
-                        Envoyer Emails
-                    </Button>
-                </Stack>
+                    <Grid item xs={4} sm={2}>
+                        <Button
+                            type="submit"
+                            variant="outlined"
+                            fullWidth
+                            disabled={
+                                organizer.name === "" ||
+                                organizer.email === "" ||
+                                isSent === true
+                            }
+                            sx={{
+                                padding: ".9rem",
+                            }}
+                        >
+                            Envoyer
+                        </Button>
+                    </Grid>
+                </Grid>
                 {error && (
                     <Typography color="error" sx={{ marginTop: "1rem" }}>
                         {error}
@@ -140,7 +151,7 @@ function Results({ results }) {
                     >
                         Les e-mails ont bien été envoyé à tous les
                         participtant·e·s ! Vous avez également reçu un
-                        récapitulatif dans voitre boite mail.
+                        récapitulatif dans votre boite mail.
                     </Typography>
                 )}
             </form>

@@ -2,7 +2,7 @@ import React from "react";
 import { Stack, Typography } from "@mui/material";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
-function Footer(props) {
+function Footer() {
     return (
         <Stack
             component="footer"
@@ -14,6 +14,7 @@ function Footer(props) {
                 padding: ".5rem",
                 maxHeight: "3vh",
                 backgroundColor: "primary.main",
+                zIndex: "2",
             }}
         >
             <Typography color="secondary.main">

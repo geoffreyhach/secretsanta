@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import Joi from "joi";
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 const schema = Joi.object({
     name: Joi.string().trim().min(3).max(15),
@@ -43,6 +44,7 @@ function AddEmail({ participants, setParticipants }) {
                 setError();
                 nameRef.current.value = "";
                 emailRef.current.value = "";
+                nameRef.current.focus();
             } else setError("Merci d'éviter les doublons d'email ou de nom.");
         } else setError(error.message);
     };
@@ -51,41 +53,56 @@ function AddEmail({ participants, setParticipants }) {
         <form onSubmit={handleSubmit}>
             {error && <Typography color="error">{error}</Typography>}
 
-            <Stack
-                direction={{ xs: "column", sm: "row" }}
-                spacing={2}
+            <Grid
+                container
+                spacing={1}
+                alignItems="center"
+                justifyContent="center"
                 sx={{ marginTop: "1rem" }}
             >
-                <TextField
-                    id="outlined-required"
-                    label="Name"
-                    placeholder="Name"
-                    inputRef={nameRef}
-                    onChange={(e) => {
-                        setNewParticipant({
-                            name: e.target.value,
-                            email: newParticipant.email,
-                        });
-                    }}
-                />
-                <TextField
-                    required
-                    id="outlined-required"
-                    inputRef={emailRef}
-                    label="Email"
-                    placeholder="Email"
-                    onChange={(e) => {
-                        setNewParticipant({
-                            email: e.target.value,
-                            name: newParticipant.name,
-                        });
-                    }}
-                />
+                <Grid item xs={12} sm={4}>
+                    <TextField
+                        fullWidth
+                        id="outlined-required"
+                        label="Name"
+                        placeholder="Name"
+                        inputRef={nameRef}
+                        onChange={(e) => {
+                            setNewParticipant({
+                                name: e.target.value,
+                                email: newParticipant.email,
+                            });
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={7}>
+                    <TextField
+                        required
+                        fullWidth
+                        id="outlined-required"
+                        inputRef={emailRef}
+                        label="Email"
+                        placeholder="Email"
+                        onChange={(e) => {
+                            setNewParticipant({
+                                email: e.target.value,
+                                name: newParticipant.name,
+                            });
+                        }}
+                    />
+                </Grid>
 
-                <Button variant="outlined" type="submit">
-                    Ajouter participant
-                </Button>
-            </Stack>
+                <Grid item xs={4} sm={1}>
+                    <Button
+                        variant="contained"
+                        type="submit"
+                        fullWidth
+                        sx={{ height: "100%" }}
+                    >
+                        <PersonAddIcon fontSize="large" />
+                    </Button>
+                </Grid>
+            </Grid>
         </form>
     );
 }
