@@ -33,12 +33,12 @@ function Results({ results }) {
             name1: name1,
             name2: name2,
         };
-        // axios
-        //     .post("https://secretsanta-api.vercel.app/sendemails", data, {
-        //         "Content-Type": "application/json",
-        //     })
-        //     .then((res) => console.log(res))
-        //     .catch((err) => console.warn(err));
+        axios
+            .post("https://secretsanta-api.vercel.app/sendemails", data, {
+                "Content-Type": "application/json",
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.warn(err));
     };
 
     const sendRecap = (email, msg) => {
@@ -46,13 +46,13 @@ function Results({ results }) {
             email: email,
             text: msg,
         };
-        console.log(organizer.email, recap);
-        // axios
-        //     .post("https://secretsanta-api.vercel.app/sendrecap", data, {
-        //         "Content-Type": "application/json",
-        //     })
-        //     .then((res) => console.log(res))
-        //     .catch((err) => console.warn(err));
+
+        axios
+            .post("https://secretsanta-api.vercel.app/sendrecap", data, {
+                "Content-Type": "application/json",
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.warn(err));
     };
 
     const handleSubmit = (e) => {
@@ -65,14 +65,13 @@ function Results({ results }) {
         if (!error) {
             results.forEach((user) => {
                 const { email, name1, name2 } = user;
-                console.log(organizer.name);
+
                 sendRecap(organizer.email, recap);
                 sendEmail(email, organizer.name, name1, name2);
             });
 
             setError("");
             setIsSent(true);
-            console.log("react post resquest");
         } else setError(error.message);
     };
 
