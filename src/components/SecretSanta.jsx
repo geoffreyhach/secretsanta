@@ -27,7 +27,7 @@ function SecretSanta() {
                         setParticipants={setParticipants}
                     />
                     {participants.length === 0 ? (
-                        <Typography>
+                        <Typography sx={{ marginTop: "1rem" }}>
                             Ajoutez votre premier participant !
                         </Typography>
                     ) : (
