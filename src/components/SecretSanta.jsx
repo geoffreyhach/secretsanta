@@ -8,8 +8,8 @@ import Results from "./Results";
 
 function SecretSanta() {
     const [participants, setParticipants] = useState([
-        { name: "Geoff", email: "mail@gmail.com" },
-        { name: "Renz", email: "renz@mail.com" },
+        // { name: "Geoff", email: "mail@gmail.com" },
+        // { name: "Renz", email: "renz@mail.com" },
     ]);
     const [results, setResults] = useState();
     return (
