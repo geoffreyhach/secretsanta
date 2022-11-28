@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Joi from "joi";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import ResultItem from "./ResultItem";
@@ -15,6 +15,15 @@ const schema = Joi.object({
 function Results({ results }) {
     const [organizer, setOrganizer] = useState({ name: "", email: "" });
     const [error, setError] = useState();
+    const [recap, setRecap] = useState("");
+
+    useEffect(() => {
+        let message = `Bonjour ${organizer.name}, voici les résultats du Secret Santa \n`;
+        results.forEach((couple) => {
+            message += `${couple.name1} doit offrir un cadeau à ${couple.name2} \n`;
+        });
+        setRecap(message);
+    }, [results, organizer]);
 
     const sendEmail = (email, organizer, name1, name2) => {
         const data = {
@@ -23,9 +32,22 @@ function Results({ results }) {
             name1: name1,
             name2: name2,
         };
-        console.log(data);
         axios
             .post("https://secretsanta-api.vercel.app/sendemails", data, {
+                "Content-Type": "application/json",
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.warn(err));
+    };
+
+    const sendRecap = (email, msg) => {
+        const data = {
+            email: email,
+            text: msg,
+        };
+        console.log(organizer.email, recap);
+        axios
+            .post("https://secretsanta-api.vercel.app/sendrecap", data, {
                 "Content-Type": "application/json",
             })
             .then((res) => console.log(res))
@@ -43,14 +65,10 @@ function Results({ results }) {
             results.forEach((user) => {
                 const { email, name1, name2 } = user;
                 console.log(organizer.name);
+                sendRecap(organizer.email, recap);
                 sendEmail(email, organizer.name, name1, name2);
             });
-            // sendEmail(
-            //     "je.suis.geoffrey.hach@gmail.com",
-            //     "le test",
-            //     "geoff",
-            //     "Beth"
-            // );
+
             setError("");
             console.log("react post resquest");
         } else setError(error.message);
