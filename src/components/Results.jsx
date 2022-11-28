@@ -16,6 +16,7 @@ function Results({ results }) {
     const [organizer, setOrganizer] = useState({ name: "", email: "" });
     const [error, setError] = useState();
     const [recap, setRecap] = useState("");
+    const [isSent, setIsSent] = useState(false);
 
     useEffect(() => {
         let message = `Bonjour ${organizer.name}, voici les résultats du Secret Santa \n`;
@@ -32,12 +33,12 @@ function Results({ results }) {
             name1: name1,
             name2: name2,
         };
-        axios
-            .post("https://secretsanta-api.vercel.app/sendemails", data, {
-                "Content-Type": "application/json",
-            })
-            .then((res) => console.log(res))
-            .catch((err) => console.warn(err));
+        // axios
+        //     .post("https://secretsanta-api.vercel.app/sendemails", data, {
+        //         "Content-Type": "application/json",
+        //     })
+        //     .then((res) => console.log(res))
+        //     .catch((err) => console.warn(err));
     };
 
     const sendRecap = (email, msg) => {
@@ -46,12 +47,12 @@ function Results({ results }) {
             text: msg,
         };
         console.log(organizer.email, recap);
-        axios
-            .post("https://secretsanta-api.vercel.app/sendrecap", data, {
-                "Content-Type": "application/json",
-            })
-            .then((res) => console.log(res))
-            .catch((err) => console.warn(err));
+        // axios
+        //     .post("https://secretsanta-api.vercel.app/sendrecap", data, {
+        //         "Content-Type": "application/json",
+        //     })
+        //     .then((res) => console.log(res))
+        //     .catch((err) => console.warn(err));
     };
 
     const handleSubmit = (e) => {
@@ -70,6 +71,7 @@ function Results({ results }) {
             });
 
             setError("");
+            setIsSent(true);
             console.log("react post resquest");
         } else setError(error.message);
     };
@@ -116,7 +118,9 @@ function Results({ results }) {
                         type="submit"
                         variant="outlined"
                         disabled={
-                            organizer.name === "" || organizer.email === ""
+                            organizer.name === "" ||
+                            organizer.email === "" ||
+                            isSent === true
                         }
                         sx={{
                             padding: ".9rem",
@@ -128,6 +132,16 @@ function Results({ results }) {
                 {error && (
                     <Typography color="error" sx={{ marginTop: "1rem" }}>
                         {error}
+                    </Typography>
+                )}
+                {isSent && (
+                    <Typography
+                        color="error"
+                        sx={{ marginTop: "1rem", fontWeight: "bold" }}
+                    >
+                        Les e-mails ont bien été envoyé à tous les
+                        participtant·e·s ! Vous avez également reçu un
+                        récapitulatif dans voitre boite mail.
                     </Typography>
                 )}
             </form>
