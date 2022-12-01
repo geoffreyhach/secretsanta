@@ -18,7 +18,7 @@ function Footer() {
             }}
         >
             <Typography color="secondary.main">
-                Developpé par Geoffrey Hach
+                Developpé par Geoffrey Hach (avec le soutien de Yavuz le boss)
             </Typography>
 
             <a href="https://www.linkedin.com/in/hachgeoffrey/">
