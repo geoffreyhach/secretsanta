@@ -15,6 +15,7 @@ function Footer() {
                 maxHeight: "3vh",
                 backgroundColor: "primary.main",
                 zIndex: "2",
+                marginTop: "1rem",
             }}
         >
             <Typography color="secondary.main">
