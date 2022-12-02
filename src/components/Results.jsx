@@ -34,7 +34,7 @@ function Results({ results }) {
             name2: name2,
         };
         axios
-            .post("https://secretsanta-api.vercel.app/sendemails", data, {
+            .post("https://api.santa-secret.fr/", data, {
                 "Content-Type": "application/json",
             })
             .then((res) => console.log(res))
