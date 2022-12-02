@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack, Typography } from "@mui/material";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 function Footer() {
     return (
@@ -18,13 +18,40 @@ function Footer() {
                 marginTop: "1rem",
             }}
         >
-            <Typography color="secondary.main">
-                Developpé par Geoffrey Hach (avec le soutien de Yavuz le boss)
-            </Typography>
-
-            <a href="https://www.linkedin.com/in/hachgeoffrey/">
-                <LinkedInIcon color="secondary" />
-            </a>
+            <Stack>
+                <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    gap=".5rem"
+                >
+                    <Typography color="secondary.main">
+                        Developpé par Geoffrey Hach
+                    </Typography>
+                    <a href="https://geoffreyhach.fr/">
+                        <OpenInNewIcon
+                            color="secondary"
+                            sx={{ fontSize: "large" }}
+                        />
+                    </a>
+                </Stack>
+                <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    gap=".5rem"
+                >
+                    <Typography color="secondary.main">
+                        Déployé par par Yavuz Kutuk
+                    </Typography>
+                    <a href="https://www.yavuz.fr/">
+                        <OpenInNewIcon
+                            color="secondary"
+                            sx={{ fontSize: "large" }}
+                        />
+                    </a>
+                </Stack>
+            </Stack>
         </Stack>
     );
 }
